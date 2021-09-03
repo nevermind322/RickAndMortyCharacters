@@ -22,6 +22,7 @@ class ListActivity : AppCompatActivity() {
                 override fun onCharacterClick(characterInfo: CharacterInfo, position: Int) {
                     val intent = Intent(this@ListActivity, DetailActivity::class.java)
                     intent.putExtra(CharacterInfo::class.simpleName, characterInfo)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivity(intent)
                 }
             }
@@ -83,7 +84,26 @@ class ListActivity : AppCompatActivity() {
                 R.drawable.jerry_smith
             )
         )
-
+        characters.add(
+            CharacterInfo(
+                "Birdperson",
+                "Alive",
+                "Bird Person",
+                "Revolutionary, singer",
+                "Male",
+                R.drawable.bird_person
+            )
+        )
+        characters.add(
+            CharacterInfo(
+                "Squanchy",
+                "Unknown",
+                "Squachy",
+                "Musician",
+                "Male",
+                R.drawable.squanchy
+            )
+        )
 
     }
 }
