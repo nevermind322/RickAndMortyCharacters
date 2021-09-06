@@ -6,11 +6,14 @@ import android.widget.ImageView
 import android.widget.TextView
 
 class DetailActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+
         val args: Bundle? = intent.extras
         val characterInfo: CharacterInfo? = args?.getParcelable(CharacterInfo::class.simpleName)
+
         if (characterInfo != null) {
             findViewById<TextView>(R.id.detail_name).text = characterInfo.name
             findViewById<ImageView>(R.id.detail_image).setImageResource(characterInfo.imageResource)
@@ -20,5 +23,4 @@ class DetailActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.detail_sex_value).text = characterInfo.sex
         }
     }
-
 }

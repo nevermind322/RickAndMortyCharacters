@@ -1,38 +1,27 @@
 package com.example.rickandmortycharacters
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class ListActivity : AppCompatActivity() {
-    val characters = mutableListOf<CharacterInfo>()
+class ListActivity : AppCompatActivity(), CharacterAdapter.OnCharacterClickListener {
+
+    private val characters = mutableListOf<CharacterInfo>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
         setInitialData()
+
         val recyclerView: RecyclerView = findViewById(R.id.list_characters)
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
-        val adapter = CharacterAdapter()
-        val characterClickListener: CharacterAdapter.OnCharacterClickListener =
-            object : CharacterAdapter.OnCharacterClickListener {
-                override fun onCharacterClick(characterInfo: CharacterInfo, position: Int) {
-                    val intent = Intent(this@ListActivity, DetailActivity::class.java)
-                    intent.putExtra(CharacterInfo::class.simpleName, characterInfo)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    startActivity(intent)
-                }
-            }
-        adapter.setClickListener(characterClickListener)
+
+        val adapter = CharacterAdapter(this)
         adapter.setData(characters)
         recyclerView.adapter = adapter
-
     }
 
-    fun setInitialData() {
+    private fun setInitialData() {
 
         characters.add(
             CharacterInfo(
@@ -101,9 +90,16 @@ class ListActivity : AppCompatActivity() {
                 "Squachy",
                 "Musician",
                 "Male",
-                R.drawable.squanchy
+                R.drawable.long_image
             )
         )
 
+    }
+
+    override fun onCharacterClick(characterInfo: CharacterInfo) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(CharacterInfo::class.simpleName, characterInfo)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
     }
 }
