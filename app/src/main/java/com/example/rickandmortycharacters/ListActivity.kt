@@ -15,6 +15,7 @@ class ListActivity : AppCompatActivity(),
 
     private val characters = mutableListOf<CharacterInfo>()
     private val adapter = CharacterAdapter(this)
+    private var pageNumber = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +25,9 @@ class ListActivity : AppCompatActivity(),
 
         val apiEndpoints: MyApiEndpoints = (this.application as App).characterApi
 
-        var call : Call<CharacterPage>
-        for (i in 1..34) {
-            call = apiEndpoints.getPage(i)
-            call.enqueue(this)
-        }
+
+        val call = apiEndpoints.getPage(pageNumber)
+        call.enqueue(this)
 
         recyclerView.adapter = adapter
 
@@ -46,10 +45,13 @@ class ListActivity : AppCompatActivity(),
 
         val page = response?.body()
         val charactersFromPage = page?.characterList
+        pageNumber++
 
         if (charactersFromPage != null) characters.addAll(charactersFromPage)
-
         adapter.setData(characters)
+
+        if (page?.info?.next != null) (this.application as App).characterApi.getPage(pageNumber).enqueue(this)
+
     }
 
     override fun onFailure(call: Call<CharacterPage>?, t: Throwable?) {}
