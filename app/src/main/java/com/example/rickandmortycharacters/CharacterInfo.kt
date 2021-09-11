@@ -10,5 +10,5 @@ data class CharacterInfo(
     val species: String,
     val type: String,
     val sex: String,
-    val imageResource: Int
+    val imageResource: String
 ): Parcelable

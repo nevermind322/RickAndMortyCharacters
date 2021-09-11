@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 
 class CharacterAdapter(private val listener: OnCharacterClickListener) :
     RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
@@ -17,11 +18,11 @@ class CharacterAdapter(private val listener: OnCharacterClickListener) :
         RecyclerView.ViewHolder(itemView) {
 
         private val image = itemView.findViewById<ImageView>(R.id.list_character_image)
-        private val name: TextView = itemView.findViewById(R.id.list_character_name)
+        private val name = itemView.findViewById<TextView>(R.id.list_character_name)
 
         fun bind(info: CharacterInfo) {
             name.text = info.name
-            image.setImageResource(info.imageResource)
+            image.load(info.imageResource)
             image.setOnClickListener { listener.onCharacterClick(info) }
         }
     }
@@ -47,7 +48,6 @@ class CharacterAdapter(private val listener: OnCharacterClickListener) :
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val character: CharacterInfo = characterList[position]
         holder.bind(character)
-
     }
 
     override fun getItemCount(): Int = characterList.size
