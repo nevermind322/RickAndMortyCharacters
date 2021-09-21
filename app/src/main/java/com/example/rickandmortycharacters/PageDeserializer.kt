@@ -1,8 +1,11 @@
 package com.example.rickandmortycharacters
 
+import com.example.rickandmortycharacters.models.CharacterInfo
+import com.example.rickandmortycharacters.models.CharacterPage
 import com.google.gson.*
 import java.lang.reflect.Type
 
+@Deprecated("Now it is useless")
 class PageDeserializer :
     JsonDeserializer<CharacterPage?> {
 

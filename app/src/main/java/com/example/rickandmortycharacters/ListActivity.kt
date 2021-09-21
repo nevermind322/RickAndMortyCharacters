@@ -4,32 +4,39 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.rickandmortycharacters.models.CharacterInfo
+import com.example.rickandmortycharacters.network.MyApiEndpoints
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+
 
 class ListActivity : AppCompatActivity(),
-    CharacterAdapter.OnCharacterClickListener,
-    Callback<CharacterPage?> {
+    CharacterAdapter.OnCharacterClickListener {
+
+    val viewModel: CharactersPageViewModel by lazy {
+        ViewModelProvider(this).get(CharactersPageViewModel::class.java)
+    }
 
     private val characters = mutableListOf<CharacterInfo>()
     private val adapter = CharacterAdapter(this)
     private var pageNumber = 1
+    private val apiEndpoints: MyApiEndpoints by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
 
+
         val recyclerView: RecyclerView = findViewById(R.id.list_characters)
-
-        val apiEndpoints: MyApiEndpoints = (this.application as App).characterApi
-
-        val call = apiEndpoints.getPage(pageNumber)
-        call.enqueue(this)
-
         recyclerView.adapter = adapter
 
+        lifecycleScope.launch {
+            viewModel.flow.collectLatest { adapter.submitData(it) }
+        }
     }
 
     override fun onCharacterClick(characterInfo: CharacterInfo) {
@@ -38,27 +45,4 @@ class ListActivity : AppCompatActivity(),
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
     }
-
-    override fun onResponse(call: Call<CharacterPage?>?, response: Response<CharacterPage?>?) {
-        if (response?.isSuccessful == true) {
-            val page = response.body()
-            val charactersFromPage = page?.characterList
-            pageNumber++
-
-            if (charactersFromPage != null) characters.addAll(charactersFromPage)
-            adapter.setData(characters)
-
-            if (page?.info?.next != null) (this.application as App)
-                .characterApi
-                .getPage(pageNumber)
-                .enqueue(this)
-        } else {
-            Toast.makeText(this, "Ошибка сети", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    override fun onFailure(call: Call<CharacterPage?>?, t: Throwable?) =
-        Toast.makeText(this, "Ошибка сети", Toast.LENGTH_LONG).show()
-
-
 }

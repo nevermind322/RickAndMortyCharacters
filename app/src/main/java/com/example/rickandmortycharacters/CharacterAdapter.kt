@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.rickandmortycharacters.models.CharacterInfo
 
 class CharacterAdapter(private val listener: OnCharacterClickListener) :
-    RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
+    PagingDataAdapter<CharacterInfo, CharacterAdapter.CharacterViewHolder>(comparatop){
 
     private val characterList = mutableListOf<CharacterInfo>()
 
@@ -22,13 +25,25 @@ class CharacterAdapter(private val listener: OnCharacterClickListener) :
 
         fun bind(info: CharacterInfo) {
             name.text = info.name
-            image.load(info.imageResource)
+            image.load(info.image)
             image.setOnClickListener { listener.onCharacterClick(info) }
         }
     }
 
     interface OnCharacterClickListener {
         fun onCharacterClick(characterInfo: CharacterInfo)
+    }
+
+    object comparatop : DiffUtil.ItemCallback<CharacterInfo>(){
+        override fun areItemsTheSame(oldItem: CharacterInfo, newItem: CharacterInfo): Boolean {
+            return oldItem.url == newItem.url
+        }
+
+        override fun areContentsTheSame(oldItem: CharacterInfo, newItem: CharacterInfo): Boolean {
+            return oldItem == newItem
+        }
+
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -46,9 +61,9 @@ class CharacterAdapter(private val listener: OnCharacterClickListener) :
         )
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        val character: CharacterInfo = characterList[position]
+        val character: CharacterInfo? = getItem(position)
+        if(character!= null)
         holder.bind(character)
     }
 
-    override fun getItemCount(): Int = characterList.size
 }
