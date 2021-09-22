@@ -11,7 +11,7 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(KoinModules.netModule)
+            modules(KoinModules.netModule, KoinModules.MvvmModule, KoinModules.pagingModule)
         }
     }
 }

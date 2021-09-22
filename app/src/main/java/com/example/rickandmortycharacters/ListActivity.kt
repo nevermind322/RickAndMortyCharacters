@@ -4,38 +4,46 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmortycharacters.adapters.CharacterAdapter
 import com.example.rickandmortycharacters.models.CharacterInfo
-import com.example.rickandmortycharacters.network.MyApiEndpoints
+import com.example.rickandmortycharacters.viewmodels.CharactersPageViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ListActivity : AppCompatActivity(),
     CharacterAdapter.OnCharacterClickListener {
 
-    val viewModel: CharactersPageViewModel by lazy {
-        ViewModelProvider(this).get(CharactersPageViewModel::class.java)
-    }
+    private val listViewModel: CharactersPageViewModel by viewModel()
 
-    private val characters = mutableListOf<CharacterInfo>()
     private val adapter = CharacterAdapter(this)
-    private var pageNumber = 1
-    private val apiEndpoints: MyApiEndpoints by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
 
-
         val recyclerView: RecyclerView = findViewById(R.id.list_characters)
         recyclerView.adapter = adapter
 
         lifecycleScope.launch {
-            viewModel.flow.collectLatest { adapter.submitData(it) }
+            listViewModel.flow.collectLatest { adapter.submitData(it) }
+        }
+        adapter.addLoadStateListener {
+            if (it.source.refresh is LoadState.Error){
+                Toast.makeText(this@ListActivity, "Network error", Toast.LENGTH_LONG).show()
+            }
+
+            if (it.source.append is LoadState.Error){
+                Toast.makeText(this@ListActivity, "Network error", Toast.LENGTH_LONG).show()
+            }
+
+            if (it.source.prepend is LoadState.Error){
+                Toast.makeText(this@ListActivity, "Network error", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

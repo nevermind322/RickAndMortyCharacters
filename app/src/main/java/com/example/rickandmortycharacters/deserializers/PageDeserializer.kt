@@ -1,4 +1,4 @@
-package com.example.rickandmortycharacters
+package com.example.rickandmortycharacters.deserializers
 
 import com.example.rickandmortycharacters.models.CharacterInfo
 import com.example.rickandmortycharacters.models.CharacterPage

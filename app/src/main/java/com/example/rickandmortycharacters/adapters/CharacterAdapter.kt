@@ -1,6 +1,5 @@
-package com.example.rickandmortycharacters
+package com.example.rickandmortycharacters.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +9,25 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.rickandmortycharacters.R
 import com.example.rickandmortycharacters.models.CharacterInfo
 
 class CharacterAdapter(private val listener: OnCharacterClickListener) :
-    PagingDataAdapter<CharacterInfo, CharacterAdapter.CharacterViewHolder>(comparatop){
+    PagingDataAdapter<CharacterInfo, CharacterAdapter.CharacterViewHolder>(comparatop) {
 
-    private val characterList = mutableListOf<CharacterInfo>()
+    interface OnCharacterClickListener {
+        fun onCharacterClick(characterInfo: CharacterInfo)
+    }
+
+    object comparatop : DiffUtil.ItemCallback<CharacterInfo>() {
+        override fun areItemsTheSame(oldItem: CharacterInfo, newItem: CharacterInfo): Boolean {
+            return oldItem.url == newItem.url
+        }
+
+        override fun areContentsTheSame(oldItem: CharacterInfo, newItem: CharacterInfo): Boolean {
+            return oldItem == newItem
+        }
+    }
 
     class CharacterViewHolder(itemView: View, private val listener: OnCharacterClickListener) :
         RecyclerView.ViewHolder(itemView) {
@@ -30,28 +42,6 @@ class CharacterAdapter(private val listener: OnCharacterClickListener) :
         }
     }
 
-    interface OnCharacterClickListener {
-        fun onCharacterClick(characterInfo: CharacterInfo)
-    }
-
-    object comparatop : DiffUtil.ItemCallback<CharacterInfo>(){
-        override fun areItemsTheSame(oldItem: CharacterInfo, newItem: CharacterInfo): Boolean {
-            return oldItem.url == newItem.url
-        }
-
-        override fun areContentsTheSame(oldItem: CharacterInfo, newItem: CharacterInfo): Boolean {
-            return oldItem == newItem
-        }
-
-
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(newData: MutableList<CharacterInfo>) {
-        characterList.clear()
-        characterList.addAll(newData)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder =
         CharacterViewHolder(
@@ -62,8 +52,7 @@ class CharacterAdapter(private val listener: OnCharacterClickListener) :
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val character: CharacterInfo? = getItem(position)
-        if(character!= null)
-        holder.bind(character)
+        if (character != null)
+            holder.bind(character)
     }
-
 }

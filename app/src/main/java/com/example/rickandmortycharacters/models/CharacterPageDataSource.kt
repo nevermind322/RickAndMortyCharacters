@@ -2,16 +2,15 @@ package com.example.rickandmortycharacters.models
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.rickandmortycharacters.network.MyApiEndpoints
-import com.example.rickandmortycharacters.network.NetworkLayer
+import com.example.rickandmortycharacters.getNextPageFromNext
+import com.example.rickandmortycharacters.network.ApiClient
 import org.koin.java.KoinJavaComponent.inject
 import java.lang.Exception
 
 
 class CharacterPageDataSource : PagingSource<Int, CharacterInfo>() {
 
-    val apiService = NetworkLayer.apiClient
-
+    private val apiService : ApiClient by inject(ApiClient::class.java)
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterInfo> {
 
@@ -29,7 +28,6 @@ class CharacterPageDataSource : PagingSource<Int, CharacterInfo>() {
         } catch (e: Exception) {
             LoadResult.Error(e)
         }
-
     }
 
     override fun getRefreshKey(state: PagingState<Int, CharacterInfo>): Int? {
@@ -40,8 +38,3 @@ class CharacterPageDataSource : PagingSource<Int, CharacterInfo>() {
     }
 }
 
-    fun CharacterPage.Info.getNextPageFromNext(): Int? {
-        if (this.next != null) return this.next.split("?page=")[1].toInt()
-        return null
-
-    }

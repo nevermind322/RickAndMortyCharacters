@@ -4,7 +4,7 @@ import com.example.rickandmortycharacters.models.CharacterInfo
 import com.example.rickandmortycharacters.network.NetworkLayer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-
+@Deprecated("Useless")
 class CharacterRepository {
 
     suspend fun getCharacterById(id: Int): CharacterInfo? {
@@ -16,22 +16,22 @@ class CharacterRepository {
         return request.body()
     }
 
-    suspend fun getPageById(id : Int) : CharacterPage? {
+    suspend fun getPageById(id: Int): CharacterPage? {
 
         val request = NetworkLayer.apiClient.getPageById(id)
 
         if (!request.isSuccessful) return null
 
-        return  request.body()
+        return request.body()
     }
 
-    suspend fun getPageCount() : Int?{
+    suspend fun getPageCount(): Int? {
 
         return getPageById(1)?.info?.pages
 
     }
 
-    suspend fun GetPages(lastPageId : Int) : Flow<CharacterPage?> {
+    suspend fun GetPages(lastPageId: Int): Flow<CharacterPage?> {
 
         return flow {
             for (i in 1..lastPageId) {
