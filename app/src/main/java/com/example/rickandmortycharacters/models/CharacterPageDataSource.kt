@@ -4,13 +4,10 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.rickandmortycharacters.getNextPageFromNext
 import com.example.rickandmortycharacters.network.ApiClient
-import org.koin.java.KoinJavaComponent.inject
 import java.lang.Exception
 
 
-class CharacterPageDataSource : PagingSource<Int, CharacterInfo>() {
-
-    private val apiService : ApiClient by inject(ApiClient::class.java)
+class CharacterPageDataSource(private val apiService : ApiClient) : PagingSource<Int, CharacterInfo>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterInfo> {
 

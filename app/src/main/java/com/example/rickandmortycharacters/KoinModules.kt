@@ -1,6 +1,5 @@
 package com.example.rickandmortycharacters
 
-import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.example.rickandmortycharacters.models.CharacterPageDataSource
 import com.example.rickandmortycharacters.network.NetworkLayer
@@ -15,7 +14,9 @@ object KoinModules {
     }
 
     val MvvmModule = module {
-        viewModel { CharactersPageViewModel() }
+        viewModel { CharactersPageViewModel(get(), get()) }
+        single {CharacterPageDataSource(get())}
+
     }
 
     val pagingModule = module {
