@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">RickAndMortyCharacters</string>
-    <string name = "status_label">Статус:</string>
-    <string name = "species_label">Вид:</string>
-    <string name = "type_label">Тип:</string>
-    <string name = "sex_label">Пол:</string>
+    <string name="status_label">Статус:</string>
+    <string name="species_label">Вид:</string>
+    <string name="type_label">Тип:</string>
+    <string name="sex_label">Пол:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

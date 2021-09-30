@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RickAndMortyCharacters">
         <activity
-            android:name=".DetailActivity"
-            android:exported="true" />
-        <activity
             android:name=".ListActivity"
             android:exported="true">
             <intent-filter>

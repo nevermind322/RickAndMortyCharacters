@@ -15,6 +15,8 @@ class CharactersPageViewModel(
     characterPageDataSourceFactory: CharacterPageDataSource
 ) : ViewModel() {
 
+    var clickedCharacter : CharacterInfo? = null
+
     val flow: Flow<PagingData<CharacterInfo>> =
         Pager(config) {characterPageDataSourceFactory} .flow.cachedIn(viewModelScope)
 }
