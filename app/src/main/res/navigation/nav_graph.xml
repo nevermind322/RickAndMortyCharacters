@@ -7,9 +7,9 @@
 
     <activity
         android:id="@+id/listActivity"
-        android:name="com.example.rickandmortycharacters.ListActivity"
+        android:name="com.example.rickandmortycharacters.MainActivity"
         android:label="activity_list"
-        tools:layout="@layout/activity_list" />
+        tools:layout="@layout/activity_main" />
     <activity
         android:id="@+id/detailActivity"
         android:name="com.example.rickandmortycharacters.DetailFragment"
