@@ -1,9 +1,11 @@
-package com.example.rickandmortycharacters
+package com.example.rickandmortycharacters.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.example.rickandmortycharacters.R
+import com.example.rickandmortycharacters.fragments.ListFragment
 
 
 class MainActivity : AppCompatActivity() {

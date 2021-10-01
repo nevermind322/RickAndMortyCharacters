@@ -1,4 +1,4 @@
-package com.example.rickandmortycharacters
+package com.example.rickandmortycharacters.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -9,14 +9,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import coil.load
+import com.example.rickandmortycharacters.R
 import com.example.rickandmortycharacters.viewmodels.CharactersPageViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -80,5 +78,11 @@ class DetailFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+
+
+        // TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+        private const val ARG_PARAM1 = "param1"
+        private const val ARG_PARAM2 = "param2"
     }
 }

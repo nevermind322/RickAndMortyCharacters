@@ -1,4 +1,4 @@
-package com.example.rickandmortycharacters
+package com.example.rickandmortycharacters.utils.extensions
 
 import com.example.rickandmortycharacters.models.CharacterPage
 

@@ -1,6 +1,7 @@
-package com.example.rickandmortycharacters
+package com.example.rickandmortycharacters.DI
 
 import androidx.paging.PagingConfig
+import com.example.rickandmortycharacters.adapters.CharacterAdapterComparator
 import com.example.rickandmortycharacters.models.CharacterPageDataSource
 import com.example.rickandmortycharacters.network.NetworkLayer
 import com.example.rickandmortycharacters.viewmodels.CharactersPageViewModel
@@ -21,5 +22,6 @@ object KoinModules {
 
     val pagingModule = module {
         single { PagingConfig(pageSize = 20, prefetchDistance = 5) }
+        single {CharacterAdapterComparator()}
     }
 }

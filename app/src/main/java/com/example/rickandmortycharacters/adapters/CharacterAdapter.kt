@@ -6,27 +6,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.rickandmortycharacters.R
 import com.example.rickandmortycharacters.models.CharacterInfo
+import org.koin.java.KoinJavaComponent.inject
 
-class CharacterAdapter(private val listener: OnCharacterClickListener) :
-    PagingDataAdapter<CharacterInfo, CharacterAdapter.CharacterViewHolder>(comparatop) {
+class CharacterAdapter(
+    private val listener: OnCharacterClickListener,
+    diffCallback: CharacterAdapterComparator
+) :
+    PagingDataAdapter<CharacterInfo, CharacterAdapter.CharacterViewHolder>( diffCallback ) {
 
     interface OnCharacterClickListener {
         fun onCharacterClick(characterInfo: CharacterInfo)
-    }
-
-    object comparatop : DiffUtil.ItemCallback<CharacterInfo>() {
-        override fun areItemsTheSame(oldItem: CharacterInfo, newItem: CharacterInfo): Boolean {
-            return oldItem.url == newItem.url
-        }
-
-        override fun areContentsTheSame(oldItem: CharacterInfo, newItem: CharacterInfo): Boolean {
-            return oldItem == newItem
-        }
     }
 
     class CharacterViewHolder(itemView: View, private val listener: OnCharacterClickListener) :

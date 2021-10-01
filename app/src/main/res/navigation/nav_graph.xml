@@ -3,15 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listActivity">
-
+    app:startDestination="@id/mainActivity">
     <activity
-        android:id="@+id/listActivity"
-        android:name="com.example.rickandmortycharacters.MainActivity"
-        android:label="activity_list"
+        android:id="@+id/mainActivity"
+        android:name="com.example.rickandmortycharacters.activities.MainActivity"
+        android:label="activity_main"
         tools:layout="@layout/activity_main" />
-    <activity
-        android:id="@+id/detailActivity"
-        android:name="com.example.rickandmortycharacters.DetailFragment"
-        android:label="DetailActivity" />
 </navigation>
+
+

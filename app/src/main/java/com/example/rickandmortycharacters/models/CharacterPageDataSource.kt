@@ -1,13 +1,9 @@
 package com.example.rickandmortycharacters.models
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import coil.request.ImageRequest
-import com.example.rickandmortycharacters.getNextPageFromNext
+import com.example.rickandmortycharacters.utils.extensions.getNextPageFromNext
 import com.example.rickandmortycharacters.network.ApiClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.lang.Exception
 
 
