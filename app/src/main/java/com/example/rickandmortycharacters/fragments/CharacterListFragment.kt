@@ -21,16 +21,14 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.context.GlobalContext.get
 
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ListFragment.newInstance] factory method to
+ * Use the [CharacterListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ListFragment : Fragment(),
+class CharacterListFragment : Fragment(),
     CharacterAdapter.OnCharacterClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -71,7 +69,7 @@ class ListFragment : Fragment(),
 
         adapter.addLoadStateListener {
             if (it.source.refresh is LoadState.Error || it.source.append is LoadState.Error || it.source.prepend is LoadState.Error) {
-                Toast.makeText(this@ListFragment.context, "Network error", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CharacterListFragment.context, "Network error", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -83,12 +81,12 @@ class ListFragment : Fragment(),
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ListFragment.
+         * @return A new instance of fragment CharacterListFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ListFragment().apply {
+            CharacterListFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -106,7 +104,7 @@ class ListFragment : Fragment(),
         activity?.supportFragmentManager?.commit {
 
             setReorderingAllowed(true)
-            replace<DetailFragment>(R.id.fragment_container)
+            replace<CharacterDetailFragment>(R.id.fragment_container)
             addToBackStack(null)
 
         }

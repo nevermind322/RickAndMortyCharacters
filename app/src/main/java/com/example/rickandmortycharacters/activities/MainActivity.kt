@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.example.rickandmortycharacters.R
-import com.example.rickandmortycharacters.fragments.ListFragment
+import com.example.rickandmortycharacters.fragments.CharacterListFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) supportFragmentManager.commit {
             setReorderingAllowed(true)
-            add<ListFragment>(R.id.fragment_container)
+            add<CharacterListFragment>(R.id.fragment_container)
         }
     }
 }
