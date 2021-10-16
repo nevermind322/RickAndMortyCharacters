@@ -20,7 +20,7 @@ class CharacterPageDataSource(private val apiService: ApiClient) :
             LoadResult.Page(
                 data = response!!.results,
                 prevKey = if (nextPage == 1) null else nextPage - 1,
-                nextKey = response.pageInfo.getNextPageFromNext()
+                nextKey = response.info.getNextPageFromNext()
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
