@@ -7,8 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import coil.load
 import com.example.rickandmortycharacters.R
+import com.example.rickandmortycharacters.databinding.ListItemBinding
 import com.example.rickandmortycharacters.models.CharacterInfo
 import org.koin.java.KoinJavaComponent.inject
 
@@ -16,17 +18,20 @@ class CharacterAdapter(
     private val listener: OnCharacterClickListener,
     diffCallback: CharacterAdapterComparator
 ) :
-    PagingDataAdapter<CharacterInfo, CharacterAdapter.CharacterViewHolder>( diffCallback ) {
+    PagingDataAdapter<CharacterInfo, CharacterAdapter.CharacterViewHolder>(diffCallback) {
 
     interface OnCharacterClickListener {
         fun onCharacterClick(characterInfo: CharacterInfo)
     }
 
-    class CharacterViewHolder(itemView: View, private val listener: OnCharacterClickListener) :
-        RecyclerView.ViewHolder(itemView) {
+    class CharacterViewHolder(
+        itemViewBinding: ListItemBinding,
+        private val listener: OnCharacterClickListener
+    ) :
+        RecyclerView.ViewHolder(itemViewBinding.root) {
 
-        private val image = itemView.findViewById<ImageView>(R.id.list_character_image)
-        private val name = itemView.findViewById<TextView>(R.id.list_character_name)
+        private val image = itemViewBinding.listCharacterImage
+        private val name = itemViewBinding.listCharacterName
 
         fun bind(info: CharacterInfo) {
             name.text = info.name
@@ -37,11 +42,16 @@ class CharacterAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder =
+
         CharacterViewHolder(
-            itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item, parent, false),
+            itemViewBinding = ListItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ),
             listener = listener
         )
+
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val character: CharacterInfo? = getItem(position)

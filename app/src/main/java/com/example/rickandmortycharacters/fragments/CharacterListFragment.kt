@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortycharacters.R
 import com.example.rickandmortycharacters.adapters.CharacterAdapter
 import com.example.rickandmortycharacters.adapters.CharacterAdapterComparator
+import com.example.rickandmortycharacters.databinding.FragmentListBinding
 import com.example.rickandmortycharacters.models.CharacterInfo
 import com.example.rickandmortycharacters.viewmodels.CharactersPageViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -27,6 +28,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class CharacterListFragment : Fragment(),
     CharacterAdapter.OnCharacterClickListener {
 
+    private lateinit var binding: FragmentListBinding
 
     private val listViewModel by sharedViewModel<CharactersPageViewModel>()
 
@@ -38,19 +40,20 @@ class CharacterListFragment : Fragment(),
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_list, container, false)
+    ): View = inflater.inflate(R.layout.fragment_list, container, false)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.list_characters)
+        binding = FragmentListBinding.bind(view)
+
+        val recyclerView: RecyclerView = binding.listCharacters
         recyclerView.adapter = adapter
 
         lifecycleScope.launch {
             listViewModel.flow.collectLatest { adapter.submitData(it) }
         }
-
 
         adapter.addLoadStateListener {
             if (it.source.refresh is LoadState.Error || it.source.append is LoadState.Error || it.source.prepend is LoadState.Error) {

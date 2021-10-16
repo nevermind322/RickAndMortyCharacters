@@ -99,7 +99,7 @@
             app:layout_constraintTop_toBottomOf="@id/detail_species" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/detail_sex"
+            android:id="@+id/detail_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -110,13 +110,13 @@
             app:layout_constraintTop_toBottomOf="@id/detail_type" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/detail_sex_value"
+            android:id="@+id/detail_gender_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintBaseline_toBaselineOf="@id/detail_sex"
-            app:layout_constraintLeft_toRightOf="@id/detail_sex"
+            app:layout_constraintBaseline_toBaselineOf="@id/detail_gender"
+            app:layout_constraintLeft_toRightOf="@id/detail_gender"
             app:layout_constraintTop_toBottomOf="@id/detail_type" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
